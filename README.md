@@ -1,5 +1,7 @@
 # Markdown → PDF
 
+**Live:** https://badrri-narayanan.github.io/MD-to-PDF/
+
 Write or import Markdown, preview it as a page, download it as a PDF, and listen to it read aloud.
 Everything runs in the browser; nothing is uploaded.
 
@@ -33,8 +35,14 @@ npm run dev      # http://localhost:5173
 | `npm run preview`    | Serve the production build                             |
 
 The build inlines all JavaScript and CSS into a single `dist/index.html`, so you can open it
-directly from disk or host it anywhere static (e.g. GitHub Pages). Fonts load from Google Fonts
-and fall back to system fonts offline.
+directly from disk or host it anywhere static. Fonts load from Google Fonts and fall back to
+system fonts offline.
+
+## Deployment
+
+Every push to `main` runs the tests, builds, and deploys `dist/` to GitHub Pages
+(`.github/workflows/ci.yml`). Pull requests run the tests and build without deploying.
+The repo's **Settings → Pages → Source** must be set to **GitHub Actions**.
 
 ## Project structure
 
