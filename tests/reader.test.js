@@ -105,6 +105,51 @@ describe('createReader', () => {
     expect(synth.spoken.map(u => u.text)).toEqual(['Two', 'Two']);
   });
 
+  describe('skip', () => {
+    it('moves to the next and previous block', () => {
+      reader.toggle();
+      reader.skip(1);
+      expect(synth.last.text).toBe('Two');
+      reader.skip(-1);
+      expect(synth.last.text).toBe('One');
+      expect(highlights.at(-1)).toBe('One');
+    });
+
+    it('cancels the current utterance so its end event is ignored', () => {
+      reader.toggle();
+      const skipped = synth.last;
+      reader.skip(1);
+      skipped.onend();
+      expect(synth.spoken.map(u => u.text)).toEqual(['One', 'Two']);
+    });
+
+    it('restarts the first block when going back from the start', () => {
+      reader.toggle();
+      reader.skip(-1);
+      expect(synth.spoken.map(u => u.text)).toEqual(['One', 'One']);
+    });
+
+    it('finishes when skipping past the last block', () => {
+      reader.playFrom(2);
+      reader.skip(1);
+      expect(reader.state).toBe('idle');
+      expect(onFinish).toHaveBeenCalledOnce();
+    });
+
+    it('resumes playing when skipping while paused', () => {
+      reader.toggle();
+      reader.toggle();
+      reader.skip(1);
+      expect(reader.state).toBe('playing');
+      expect(synth.last.text).toBe('Two');
+    });
+
+    it('does nothing when idle', () => {
+      expect(reader.skip(1)).toBe(false);
+      expect(synth.speak).not.toHaveBeenCalled();
+    });
+  });
+
   it('reports false when there is nothing to read', () => {
     const empty = createReader({ synth, Utterance: FakeUtterance, getBlocks: () => [], schedule: fn => fn() });
     expect(empty.toggle()).toBe(false);

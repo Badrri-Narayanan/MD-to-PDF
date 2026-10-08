@@ -7,8 +7,8 @@ When it looks right, hit **Download PDF**.
 
 - **Import** a `.md` file with the button above, or drag one anywhere onto the page
 - **Download** the preview straight to a PDF, or use **Print** for selectable text
-- **Listen**: press play below to have the document read aloud
-- Double-click any paragraph to start reading from there
+- **Listen**: press play below to have the document read aloud, and skip back or forward a block at a time
+- Hover over any paragraph (or tap it) and press its play button to start reading from there
 
 Task lists:
 

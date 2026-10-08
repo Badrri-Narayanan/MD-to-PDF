@@ -10,8 +10,9 @@ Everything runs in the browser; nothing is uploaded.
 - **Live preview** of GitHub-flavoured Markdown: tables, task lists, strikethrough, syntax-highlighted code
 - **Import** `.md` / `.markdown` / `.txt` files with the button, <kbd>⌘/Ctrl</kbd>+<kbd>O</kbd>, or drag & drop
 - **Download PDF** (<kbd>⌘/Ctrl</kbd>+<kbd>S</kbd>) straight to a file, or **Print** for a PDF with selectable text
-- **Read aloud** with the browser's speech engine: voice and speed controls, highlights the current block,
-  double-click any paragraph to start from there
+- **Read aloud** with the browser's speech engine: voice and speed controls, previous/next block,
+  and highlights the current block. Hover over (or tap) any paragraph and press its play button,
+  or double-click it, to start reading from there
 - Serif or sans document font, A4 or Letter pages, light and dark themes
 - Content and settings are remembered between visits
 
@@ -55,6 +56,7 @@ src/
     markdown.js        Markdown → sanitized, highlighted HTML
     pdf.js             PDF export (html2pdf.js, loaded on demand) and print
     reader.js          Read-aloud state machine over the Web Speech API
+    start-button.js    Placement of the "read from here" button
     speech-blocks.js   Splits the rendered document into speakable blocks
     voices.js          Voice ordering and default selection
     files.js           File type checks and PDF file naming
@@ -62,6 +64,7 @@ src/
     storage.js         localStorage wrapper that never throws
   ui/                  DOM wiring for each part of the page
     player.js          Read-aloud player controls
+    start-here.js      "Read from here" button beside the hovered block
     importer.js        Import button and drag & drop
     theme.js           Light/dark toggle
     toast.js           Notifications

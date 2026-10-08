@@ -42,4 +42,3 @@
   box-shadow: 0 0 0 4px rgba(124, 92, 255, .13);
   border-radius: 3px;
 }
-.doc [data-readable] { cursor: text; transition: background .2s, box-shadow .2s; }
