@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markdown to PDF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
+</head>
+<body data-view="edit">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13l2 2 4-4"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+</svg>
+
+<header class="topbar chrome">
+  <div class="brand">
+    <div class="brand-mark"><svg><use href="#i-logo"/></svg></div>
+    <div>
+      <div class="brand-name">Markdown → PDF</div>
+      <div class="brand-sub">Write, listen, export. Runs entirely in your browser.</div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn" id="importBtn" title="Import a Markdown file (⌘/Ctrl+O)">
+      <svg class="icon"><use href="#i-upload"/></svg><span class="label">Import .md</span>
+    </button>
+    <input type="file" id="fileInput" accept=".md,.markdown,.mdown,.txt,text/markdown" hidden>
+    <label class="field" title="PDF file name">
+      <svg class="icon"><use href="#i-file"/></svg>
+      <input type="text" id="fileName" value="document" aria-label="PDF file name">
+      <span class="suffix">.pdf</span>
+    </label>
+    <button class="btn icon-only" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">
+      <svg class="icon"><use href="#i-moon"/></svg>
+    </button>
+    <button class="btn" id="printBtn" title="Print, or save a PDF with selectable text via the print dialog">
+      <svg class="icon"><use href="#i-print"/></svg><span class="label">Print</span>
+    </button>
+    <button class="btn primary" id="downloadBtn" title="Download the preview as a PDF (⌘/Ctrl+S)">
+      <svg class="icon"><use href="#i-download"/></svg><span class="label">Download PDF</span>
+    </button>
+  </div>
+</header>
+
+<nav class="tabs chrome" role="tablist">
+  <button class="tab active" data-view="edit" role="tab">Edit</button>
+  <button class="tab" data-view="preview" role="tab">Preview</button>
+</nav>
+
+<main class="workspace">
+  <section class="pane editor-pane chrome">
+    <div class="pane-head">
+      <span class="pane-title"><span class="dot"></span>Markdown</span>
+      <span class="stats" id="stats"></span>
+    </div>
+    <textarea id="editor" spellcheck="false" aria-label="Markdown input"></textarea>
+  </section>
+
+  <section class="pane preview-pane">
+    <div class="pane-head chrome">
+      <span class="pane-title"><span class="dot"></span>Preview</span>
+      <div class="head-controls">
+        <label>Font
+          <select id="fontSel"><option value="serif">Serif</option><option value="sans">Sans</option></select>
+        </label>
+        <label>Page
+          <select id="pageSel"><option value="A4">A4</option><option value="Letter">Letter</option></select>
+        </label>
+      </div>
+    </div>
+    <div class="preview-scroll" id="previewScroll">
+      <article id="preview" class="doc paper" title="Double-click a paragraph to read aloud from there"></article>
+    </div>
+
+    <div class="player chrome" id="player">
+      <button class="play-btn" id="playBtn" aria-label="Read aloud">
+        <svg><use href="#i-play"/></svg>
+      </button>
+      <button class="stop-btn" id="stopBtn" aria-label="Stop reading" title="Stop">
+        <svg class="icon"><use href="#i-stop"/></svg>
+      </button>
+      <div class="player-info">
+        <div class="player-label" id="playerLabel">Listen to this document</div>
+        <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+      </div>
+      <select id="voiceSel" aria-label="Voice"></select>
+      <select id="rateSel" aria-label="Speed">
+        <option value="0.75">0.75×</option>
+        <option value="1" selected>1×</option>
+        <option value="1.25">1.25×</option>
+        <option value="1.5">1.5×</option>
+        <option value="2">2×</option>
+      </select>
+    </div>
+  </section>
+</main>
+
+<div class="drop-overlay chrome">
+  <div class="drop-card">
+    <svg><use href="#i-upload"/></svg>
+    <h2>Drop your Markdown file</h2>
+    <p>.md, .markdown or .txt</p>
+  </div>
+</div>
+<div class="toast chrome" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

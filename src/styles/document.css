@@ -1,0 +1,45 @@
+/* Document styles: shared by the preview, the downloaded PDF and print. */
+.doc { font: 11.5pt/1.65 "Source Serif 4", Georgia, serif; }
+.doc.sans { font-family: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 10.5pt; }
+.doc h1, .doc h2, .doc h3, .doc h4, .doc h5, .doc h6 {
+  font-family: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.25; margin: 1.5em 0 .5em; letter-spacing: -.01em;
+  break-after: avoid; page-break-after: avoid;
+}
+.doc h1 { font-size: 2.1em; font-weight: 700; padding-bottom: .3em; border-bottom: 2px solid #ede9fe; }
+.doc h2 { font-size: 1.5em; font-weight: 600; padding-bottom: .25em; border-bottom: 1px solid #e5e7eb; }
+.doc h3 { font-size: 1.2em; font-weight: 600; }
+.doc > :first-child { margin-top: 0; }
+.doc a { color: #6d28d9; }
+.doc code {
+  font: .86em "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  background: #f4f2ff; color: #4c1d95; padding: .15em .4em; border-radius: 4px;
+}
+.doc pre {
+  background: #f8f9fb; border: 1px solid #e5e7eb; border-radius: 8px;
+  padding: 14px 16px; overflow-x: auto; break-inside: avoid; page-break-inside: avoid;
+  white-space: pre-wrap; word-wrap: break-word; line-height: 1.55;
+}
+.doc pre code { background: none; color: inherit; padding: 0; }
+.doc blockquote {
+  margin: 1.2em 0; padding: .6em 1em; color: #4b5563;
+  background: #faf9ff; border-left: 4px solid #8b5cf6; border-radius: 0 6px 6px 0;
+}
+.doc blockquote > :first-child { margin-top: 0; }
+.doc blockquote > :last-child { margin-bottom: 0; }
+.doc table { border-collapse: collapse; margin: 1.2em 0; break-inside: avoid; page-break-inside: avoid; font-size: .95em; }
+.doc th, .doc td { border: 1px solid #e5e7eb; padding: 7px 12px; }
+.doc th:not([align]) { text-align: left; }
+.doc th { background: #f5f3ff; font-family: "Inter", sans-serif; font-weight: 600; }
+.doc tr:nth-child(even) td { background: #fafafa; }
+.doc img { max-width: 100%; break-inside: avoid; page-break-inside: avoid; }
+.doc hr { border: 0; border-top: 1px solid #e5e7eb; margin: 2em 0; }
+.doc li:has(> input[type=checkbox]) { list-style: none; margin-left: -1.3em; }
+.doc input[type=checkbox] { accent-color: #7c5cff; }
+.doc .page-break, .doc .html2pdf__page-break { break-after: page; page-break-after: always; height: 0; }
+.doc .speaking {
+  background: rgba(124, 92, 255, .13);
+  box-shadow: 0 0 0 4px rgba(124, 92, 255, .13);
+  border-radius: 3px;
+}
+.doc [data-readable] { cursor: text; transition: background .2s, box-shadow .2s; }
