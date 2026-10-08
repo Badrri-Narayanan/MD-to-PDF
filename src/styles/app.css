@@ -171,7 +171,7 @@ select {
 #editor::selection { background: color-mix(in srgb, var(--accent-1) 30%, transparent); }
 
 .preview-scroll {
-  flex: 1; overflow: auto; padding: 28px 24px 110px;
+  position: relative; flex: 1; overflow: auto; padding: 28px 24px 110px;
   background-image: radial-gradient(var(--canvas-dot) 1px, transparent 1px);
   background-size: 18px 18px;
 }
@@ -197,8 +197,10 @@ select {
 }
 .play-btn svg { width: 18px; height: 18px; }
 .play-btn:focus-visible { outline: 2px solid var(--accent-1); outline-offset: 2px; }
-.stop-btn { border: 0; background: none; color: var(--muted); cursor: pointer; padding: 6px; border-radius: 8px; display: grid; place-items: center; }
-.stop-btn:hover { background: var(--hover); color: var(--text); }
+.ctrl-btn { border: 0; background: none; color: var(--muted); cursor: pointer; padding: 6px; border-radius: 8px; display: grid; place-items: center; flex: none; }
+.ctrl-btn:hover:not(:disabled) { background: var(--hover); color: var(--text); }
+.ctrl-btn:disabled { opacity: .35; cursor: default; }
+.ctrl-btn:focus-visible { outline: 2px solid var(--accent-1); outline-offset: 2px; }
 .player-info { flex: 1; min-width: 0; }
 .player-label { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .player-label span { color: var(--muted); font-weight: 500; }
@@ -206,7 +208,20 @@ select {
 .progress-bar { height: 100%; width: 0; background: var(--accent-grad); transition: width .3s; }
 .player select { max-width: 150px; }
 .player select:empty { display: none; }
-.player.unsupported .play-btn, .player.unsupported .stop-btn, .player.unsupported select { display: none; }
+.player.unsupported .play-btn, .player.unsupported .ctrl-btn, .player.unsupported select { display: none; }
+
+.start-btn {
+  position: absolute; z-index: 2;
+  width: 28px; height: 28px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
+  display: grid; place-items: center; color: #fff; background: var(--accent-grad);
+  box-shadow: 0 4px 12px -4px var(--accent-1);
+  animation: pop .15s ease-out;
+}
+.start-btn[hidden] { display: none; }
+.start-btn svg { width: 13px; height: 13px; margin-left: 2px; }
+.start-btn:hover { filter: brightness(1.1); transform: scale(1.08); }
+.start-btn:focus-visible { outline: 2px solid var(--accent-1); outline-offset: 2px; }
+@keyframes pop { from { opacity: 0; transform: scale(.6); } }
 .eq { display: none; gap: 2px; align-items: end; height: 12px; margin-left: 6px; vertical-align: middle; }
 .player.playing .eq { display: inline-flex; }
 .eq i { width: 3px; background: var(--accent-1); border-radius: 2px; animation: eq 1s ease-in-out infinite; }
@@ -247,8 +262,11 @@ body.dragging .drop-overlay { display: grid; }
 @media (max-width: 560px) {
   .btn .label, .brand-sub, .field .suffix { display: none; }
   .field input { width: 96px; }
-  .player select { max-width: 90px; }
-  #rateSel { display: none; }
+  .player { flex-wrap: wrap; row-gap: 6px; border-radius: 22px; padding: 8px 12px 10px 8px; }
+  .player-info { order: 1; flex-basis: 100%; padding-left: 6px; }
+  .player select { flex: 1; min-width: 0; max-width: none; }
+  #rateSel { flex: none; }
+  .preview-scroll { padding-bottom: 150px; }
 }
 
 @page { margin: 16mm 15mm; }

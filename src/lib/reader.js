@@ -99,11 +99,24 @@ export function createReader({
     if (state !== 'idle') playFrom(index);
   }
 
+  /** Jumps by `offset` blocks and keeps reading, even if paused. Returns false when idle. */
+  function skip(offset) {
+    if (state === 'idle') return false;
+    const target = index + offset;
+    if (target >= blocks.length) {
+      stop();
+      onFinish();
+      return true;
+    }
+    return playFrom(target);
+  }
+
   return {
     playFrom,
     toggle,
     stop,
     restart,
+    skip,
     get state() { return state; },
     get index() { return index; },
     get total() { return blocks.length; },

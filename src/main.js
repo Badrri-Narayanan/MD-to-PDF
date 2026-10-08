@@ -31,13 +31,17 @@ const reader = initPlayer({
   elements: {
     player: $('player'),
     playBtn: $('playBtn'),
+    prevBtn: $('prevBtn'),
+    nextBtn: $('nextBtn'),
     stopBtn: $('stopBtn'),
+    startHereBtn: $('startHereBtn'),
     label: $('playerLabel'),
     progressBar: $('progressBar'),
     voiceSel: $('voiceSel'),
     rateSel: $('rateSel'),
   },
   preview,
+  previewScroll: $('previewScroll'),
   store,
   toast,
 });

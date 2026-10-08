@@ -21,6 +21,8 @@
   <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></symbol>
   <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></symbol>
   <symbol id="i-stop" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="2.5" height="14" rx="1"/><path d="M19 6.2v11.6a1 1 0 0 1-1.5.86L9 13.3a1.5 1.5 0 0 1 0-2.6l8.5-5.36A1 1 0 0 1 19 6.2z"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24" fill="currentColor"><rect x="16.5" y="5" width="2.5" height="14" rx="1"/><path d="M5 6.2v11.6a1 1 0 0 0 1.5.86L15 13.3a1.5 1.5 0 0 0 0-2.6L6.5 5.34A1 1 0 0 0 5 6.2z"/></symbol>
 </svg>
 
 <header class="topbar chrome">
@@ -80,14 +82,23 @@
       </div>
     </div>
     <div class="preview-scroll" id="previewScroll">
-      <article id="preview" class="doc paper" title="Double-click a paragraph to read aloud from there"></article>
+      <article id="preview" class="doc paper"></article>
+      <button class="start-btn chrome" id="startHereBtn" hidden aria-label="Read aloud from here" title="Read aloud from here">
+        <svg><use href="#i-play"/></svg>
+      </button>
     </div>
 
     <div class="player chrome" id="player">
+      <button class="ctrl-btn" id="prevBtn" aria-label="Previous block" title="Previous block" disabled>
+        <svg class="icon"><use href="#i-prev"/></svg>
+      </button>
       <button class="play-btn" id="playBtn" aria-label="Read aloud">
         <svg><use href="#i-play"/></svg>
       </button>
-      <button class="stop-btn" id="stopBtn" aria-label="Stop reading" title="Stop">
+      <button class="ctrl-btn" id="nextBtn" aria-label="Next block" title="Next block" disabled>
+        <svg class="icon"><use href="#i-next"/></svg>
+      </button>
+      <button class="ctrl-btn" id="stopBtn" aria-label="Stop reading" title="Stop" disabled>
         <svg class="icon"><use href="#i-stop"/></svg>
       </button>
       <div class="player-info">

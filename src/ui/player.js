@@ -1,10 +1,11 @@
 import { createReader } from '../lib/reader.js';
 import { collectBlocks, indexOfBlock } from '../lib/speech-blocks.js';
 import { pickVoice, sortVoices } from '../lib/voices.js';
+import { initStartHere } from './start-here.js';
 
 /** Read-aloud player. Returns the reader, or null when the browser has no speech synthesis. */
-export function initPlayer({ elements, preview, store, toast }) {
-  const { player, playBtn, stopBtn, label, progressBar, voiceSel, rateSel } = elements;
+export function initPlayer({ elements, preview, previewScroll, store, toast }) {
+  const { player, playBtn, prevBtn, nextBtn, stopBtn, startHereBtn, label, progressBar, voiceSel, rateSel } = elements;
   const synth = window.speechSynthesis;
 
   if (!synth || !window.SpeechSynthesisUtterance) {
@@ -34,6 +35,7 @@ export function initPlayer({ elements, preview, store, toast }) {
     player.classList.toggle('playing', playing);
     playBtn.querySelector('use').setAttribute('href', playing ? '#i-pause' : '#i-play');
     playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Read aloud');
+    [prevBtn, nextBtn, stopBtn].forEach(btn => { btn.disabled = state === 'idle'; });
 
     if (state === 'idle' || !total) {
       label.textContent = 'Listen to this document';
@@ -65,6 +67,8 @@ export function initPlayer({ elements, preview, store, toast }) {
   playBtn.addEventListener('click', () => {
     if (!reader.toggle()) toast('Nothing to read yet');
   });
+  prevBtn.addEventListener('click', () => reader.skip(-1));
+  nextBtn.addEventListener('click', () => reader.skip(1));
   stopBtn.addEventListener('click', () => reader.stop());
   voiceSel.addEventListener('change', () => {
     store.set('voice', voiceSel.value);
@@ -79,6 +83,12 @@ export function initPlayer({ elements, preview, store, toast }) {
     if (index < 0) return;
     window.getSelection()?.removeAllRanges();
     reader.playFrom(index);
+  });
+  initStartHere({
+    button: startHereBtn,
+    container: previewScroll,
+    preview,
+    onStart: index => reader.playFrom(index),
   });
   addEventListener('beforeunload', () => synth.cancel());
 
